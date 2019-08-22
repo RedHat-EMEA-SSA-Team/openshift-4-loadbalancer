@@ -1,6 +1,9 @@
 # OpenShift 4 load balancer container image
 OpenShift 4 load balancer for PoC's or developemt/testing purpose - NOT for production purpose
 
+**If you push changes to master, we'll immediately launch an image build on
+[quay.io](https://quay.io/repository/redhat-emea-ssa-team/openshift-4-loadbalancer?tab=info)!**
+
 ## Environment variables
 | Variable  | Description | Example |
 |----|----|----|
