@@ -31,7 +31,7 @@ function build_listen_conf {
 #   export INGRESS_HTTP_LISTEN="127.0.0.1:80,192.168.222.1:80"
 #   export INGRESS_HTTPS="master-0=192.168.222.31:443,master-1=192.168.222.32:443,master-3=192.168.222.33:443,worker-0=192.168.222.34:443,worker-1=192.168.222.35:443,worker-3=192.168.222.36:443"
 #   export INGRESS_HTTPS_LISTEN="127.0.0.1:443,192.168.222.1:443"
-#   export MACHEIN_CONFIG_SERVER="bootstrap=192.168.222.30:22623,master-0=192.168.222.31:22623,master-1=192.168.222.32:22623,master-3=192.168.222.33:22623"
+#   export MACHINE_CONFIG_SERVER="bootstrap=192.168.222.30:22623,master-0=192.168.222.31:22623,master-1=192.168.222.32:22623,master-3=192.168.222.33:22623"
 #   export MACHINE_CONFIG_SERVER_LISTEN="127.0.0.1:22623,192.168.222.1:22623"
 
 export INGRESS_HTTP_CFG=$(build_member_conf $INGRESS_HTTP)
@@ -43,7 +43,7 @@ export INGRESS_HTTPS_LISTEN_CFG=$(build_listen_conf ${INGRESS_HTTPS_LISTEN:-*:44
 export API_CFG=$(build_member_conf $API)
 export API_LISTEN_CFG=$(build_listen_conf ${API_LISTEN:-*:6443})
 
-export MACHEIN_CONFIG_SERVER_CFG=$(build_member_conf $MACHEIN_CONFIG_SERVER)
+export MACHINE_CONFIG_SERVER_CFG=$(build_member_conf $MACHINE_CONFIG_SERVER)
 export MACHINE_CONFIG_SERVER_LISTEN_CFG=$(build_listen_conf ${MACHINE_CONFIG_SERVER_LISTEN:-*:22623})
 
 envsubst < haproxy-template.cfg > /haproxy.cfg
