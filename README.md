@@ -4,6 +4,8 @@ OpenShift 4 load balancer for PoC's or developemt/testing purpose - NOT for prod
 **If you push changes to master, we'll immediately launch an image build on
 [quay.io](https://quay.io/repository/redhat-emea-ssa-team/openshift-4-loadbalancer?tab=info)!**
 
+![build status](https://quay.io/repository/redhat-emea-ssa-team/openshift-4-loadbalancer/status)
+
 If you like to play with it and look around: 
 ```
 podman run -ti quay.io/redhat-emea-ssa-team/openshift-4-loadbalancer bash
