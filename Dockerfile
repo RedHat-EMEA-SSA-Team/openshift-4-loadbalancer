@@ -2,7 +2,7 @@ FROM centos:7
 
 MAINTAINER Robert Bohne <robert.bohne@redhat.com>
 
-RUN yum install -y haproxy gettext && \
+RUN yum install -y haproxy gettext nmap-ncat && \
     yum update -y && \
     yum clean all
 
@@ -19,7 +19,9 @@ STOPSIGNAL SIGUSR1
 
 
 COPY entrypoint.sh /
+COPY watch-stats.sh /
 COPY haproxy-template.cfg /
+
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["haproxy", "-f", "/haproxy.cfg"]
 
