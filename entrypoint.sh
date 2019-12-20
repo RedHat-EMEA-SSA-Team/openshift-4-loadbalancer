@@ -41,15 +41,13 @@ function build_listen_conf {
 if [ ! -z "${STATS_LISTEN}" ] && [ ! -z "${STATS_ADMIN_PASSWORD}" ] ; then
     echo "Stats enabled;"
     export STATS_CFG="
-listen stats $STATS_LISTEN
-  mode            http
+frontend stats
+  bind $STATS_LISTEN
+  mode http
   log             global
 
   maxconn 10
   timeout client 100s
-  timeout server 100s
-  timeout connect 100s
-  timeout queue   100s
 
   stats enable
   stats hide-version
