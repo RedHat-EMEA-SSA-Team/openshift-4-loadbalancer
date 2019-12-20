@@ -1,10 +1,10 @@
-FROM centos:7
+FROM registry.access.redhat.com/ubi8/ubi-minimal
 
 MAINTAINER Robert Bohne <robert.bohne@redhat.com>
 
-RUN yum install -y haproxy gettext nmap-ncat && \
-    yum update -y && \
-    yum clean all
+RUN microdnf update -y && rm -rf /var/cache/yum
+RUN microdnf install haproxy gettext nmap-ncat -y \
+    && microdnf clean all
 
 EXPOSE 6443
 EXPOSE 80
