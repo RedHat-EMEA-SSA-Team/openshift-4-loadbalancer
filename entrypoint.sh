@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 # Examples:
+#   export HAPROXY_CLIENT_TIMEOUT=30s
+#   export HAPROXY_SERVER_TIMEOUT=30s
 #   export API="bootstrap=192.168.222.30:6443,master-0=192.168.222.31:6443,master-1=192.168.222.32:6443,master-3=192.168.222.33:6443"
 #   export API_LISTEN="127.0.0.1:6443,192.168.222.1:6443"
 #   export INGRESS_HTTP="master-0=192.168.222.31:80,master-1=192.168.222.32:80,master-3=192.168.222.33:80,worker-0=192.168.222.34:80,worker-1=192.168.222.35:80,worker-3=192.168.222.36:80"
@@ -18,8 +20,8 @@ function build_member_conf {
     DATA=$1
     IFS=,
     CONFIG=""
-    for i in $DATA ; do 
-        # i contains 'name=ip:port'        
+    for i in $DATA ; do
+        # i contains 'name=ip:port'
         #       ${i%:=} => name
         #       ${i#*=} => ip:port
         CONFIG+="    server ${i%=*} ${i#*=} check\n"
@@ -59,6 +61,10 @@ frontend stats
 else
     export STATS_CFG=""
 fi
+
+# If timeout valies are not set keep default to 1minute to maintain upward compatibility
+export HAPROXY_CLIENT_TIMEOUT_CFG=${HAPROXY_CLIENT_TIMEOUT:-1m}
+export HAPROXY_SERVER_TIMEOUT_CFG=${HAPROXY_SERVER_TIMEOUT:-1m}
 
 export INGRESS_HTTP_CFG=$(build_member_conf $INGRESS_HTTP)
 export INGRESS_HTTP_LISTEN_CFG=$(build_listen_conf ${INGRESS_HTTP_LISTEN:-*:80})
