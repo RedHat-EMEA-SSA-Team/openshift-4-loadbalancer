@@ -6,7 +6,7 @@ OpenShift 4 load balancer for PoC's or developemt/testing purpose - NOT for prod
 
 ![build status](https://quay.io/repository/redhat-emea-ssa-team/openshift-4-loadbalancer/status)
 
-If you like to play with it and look around: 
+If you like to play with it and look around:
 ```
 podman run -ti quay.io/redhat-emea-ssa-team/openshift-4-loadbalancer bash
 $ haproxy -f /haproxy.cfg
@@ -26,13 +26,15 @@ $ haproxy -f /haproxy.cfg
 |MACHINE_CONFIG_SERVER_LISTEN|Machine config server listener|`127.0.0.1:22623,192.168.222.1:22623`
 |STATS_LISTEN|Stats listen if empty stats on TCP socket is disabled|`127.0.0.1:1984`
 |STATS_ADMIN_PASSWORD|Stats admin passwort if empty stats on TCP socket is disabled|`aengeo4oodoidaiP`
+|HAPROXY_CLIENT_TIMEOUT|Client timeout for the connection. Defaults to 1m if not specified|`1m`
+|HAPROXY_SERVER_TIMEOUT|Server timeout for the connection. Defaults to 1m if not specified|`1m`
 
 ## Show stats via unix socket
 
 ```
 podman exec -ti openshift-4-loadbalancer /watch-stats.sh
 ```
-## Deployment 
+## Deployment
 
 ### Systemd service example
 
@@ -60,6 +62,8 @@ ExecStart=/usr/bin/podman run --name openshift-4-loadbalancer --net host \
   -e MACHINE_CONFIG_SERVER_LISTEN=127.0.0.1:22623,192.168.222.1:22623 \
   -e STATS_LISTEN=127.0.0.1:1984 \
   -e STATS_ADMIN_PASSWORD=aengeo4oodoidaiP \
+  -e HAPROXY_CLIENT_TIMEOUT=1m \
+  -e HAPROXY_SERVER_TIMEOUT=1m \
   quay.io/redhat-emea-ssa-team/openshift-4-loadbalancer
 
 ExecReload=-/usr/bin/podman stop "openshift-4-loadbalancer"
