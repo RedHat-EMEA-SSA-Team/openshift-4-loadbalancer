@@ -16,6 +16,7 @@ $ haproxy -f /haproxy.cfg
 ## Environment variables
 | Variable  | Description | Example |
 |----|----|----|
+|HAPROXY_CFG|The entire HAProxy config is set all following variables will be ignored.|`global\n    log         127.0.0.1 local2`|
 |API|API Member |`bootstrap=192.168.222.30:6443,master-0=192.168.222.31:6443`
 |API_LISTEN|API listener |`127.0.0.1:6443,192.168.222.1:6443`
 |INGRESS_HTTP|Ingress http member|`worker-0=192.168.222.34:443`

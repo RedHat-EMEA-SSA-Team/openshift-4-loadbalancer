@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Examples:
+ # Examples:
 #   export HAPROXY_CLIENT_TIMEOUT=30s
 #   export HAPROXY_SERVER_TIMEOUT=30s
 #   export API="bootstrap=192.168.222.30:6443,master-0=192.168.222.31:6443,master-1=192.168.222.32:6443,master-3=192.168.222.33:6443"
@@ -13,7 +13,7 @@
 #   export MACHINE_CONFIG_SERVER_LISTEN="127.0.0.1:22623,192.168.222.1:22623"
 #   export STATS_LISTEN="127.0.0.1:1984"
 #   export STATS_ADMIN_PASSWORD="aengeo4oodoidaiP"
-
+#   export HAPROXY_CFG=""
 
 
 function build_member_conf {
@@ -39,6 +39,14 @@ function build_listen_conf {
     done
     echo -e $CONFIG;
 }
+
+if [ ! -z "$HAPROXY_CFG" ] ; then
+    echo "#"
+    echo "# Use only HAPROXY_CFG, ignored all other variables!"
+    echo "#"
+    echo "$HAPROXY_CFG" > /haproxy.cfg
+    exec "$@"
+fi
 
 if [ ! -z "${STATS_LISTEN}" ] && [ ! -z "${STATS_ADMIN_PASSWORD}" ] ; then
     echo "Stats enabled;"
