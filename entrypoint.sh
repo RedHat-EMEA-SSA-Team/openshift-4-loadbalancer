@@ -21,10 +21,14 @@ function build_member_conf {
     IFS=,
     CONFIG=""
     for i in $DATA ; do
+        BOOTSTRAP_OPTION=""
         # i contains 'name=ip:port'
         #       ${i%:=} => name
         #       ${i#*=} => ip:port
-        CONFIG+="    server ${i%=*} ${i#*=} check\n"
+        if [ "${i%=*}" = "bootstrap" ] ; then
+            BOOTSTRAP_OPTION="backup"
+        fi
+        CONFIG+="    server ${i%=*} ${i#*=} check inter 1s ${BOOTSTRAP_OPTION}\n"
     done
     echo -e $CONFIG;
 }
@@ -49,11 +53,11 @@ if [ ! -z "$HAPROXY_CFG" ] ; then
 fi
 
 if [ ! -z "${STATS_LISTEN}" ] && [ ! -z "${STATS_ADMIN_PASSWORD}" ] ; then
-    echo "Stats enabled;"
+    echo "# Stats enabled;"
     export STATS_CFG="
 frontend stats
   bind $STATS_LISTEN
-  mode http
+  mode            http
   log             global
 
   maxconn 10
